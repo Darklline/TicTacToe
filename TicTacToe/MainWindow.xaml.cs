@@ -60,5 +60,31 @@ namespace TicTacToe
 
 
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(mGameEnded)
+            {
+                NewGame();
+                return;
+            }
+
+            var button = (Button)sender;
+
+            // Button position in the array
+            var column = Grid.GetColumn(button);
+            var row = Grid.GetRow(button);
+            var index = column + (row * 3);
+
+            if (mResults[index] != MarkType.Free) return;
+
+            mResults[index] = mPlayer1Turn ? MarkType.Cross : MarkType.Nought;
+
+            button.Content = mPlayer1Turn ? "X" : "O";
+
+            if (!mPlayer1Turn) button.Foreground = Brushes.Red;
+            //Change players turns
+            mPlayer1Turn ^= true;
+        }
     }
 }
